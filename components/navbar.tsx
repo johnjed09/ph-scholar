@@ -1,17 +1,17 @@
-'use client'
+"use client";
 
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   const isActive = (href: string) => {
-    return pathname === href
-  }
+    return pathname === href;
+  };
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-border bg-white shadow-sm">
+    <nav className="sticky top-0 z-50 border-b border-border bg-card shadow-sm">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -29,9 +29,9 @@ export default function Navbar() {
             <Link
               href="/"
               className={`text-sm font-medium transition-colors ${
-                isActive('/') 
-                  ? 'text-primary' 
-                  : 'text-foreground/70 hover:text-foreground'
+                isActive("/")
+                  ? "text-primary"
+                  : "text-foreground/70 hover:text-foreground"
               }`}
             >
               Search
@@ -39,9 +39,9 @@ export default function Navbar() {
             <Link
               href="/universities"
               className={`text-sm font-medium transition-colors ${
-                isActive('/universities') 
-                  ? 'text-primary' 
-                  : 'text-foreground/70 hover:text-foreground'
+                isActive("/universities")
+                  ? "text-primary"
+                  : "text-foreground/70 hover:text-foreground"
               }`}
             >
               Universities
@@ -49,9 +49,9 @@ export default function Navbar() {
             <Link
               href="/authors"
               className={`text-sm font-medium transition-colors ${
-                isActive('/authors') 
-                  ? 'text-primary' 
-                  : 'text-foreground/70 hover:text-foreground'
+                isActive("/authors")
+                  ? "text-primary"
+                  : "text-foreground/70 hover:text-foreground"
               }`}
             >
               Authors
@@ -60,5 +60,5 @@ export default function Navbar() {
         </div>
       </div>
     </nav>
-  )
+  );
 }

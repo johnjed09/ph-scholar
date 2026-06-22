@@ -1,9 +1,9 @@
 interface ResearchCardProps {
-  title: string
-  description: string
-  category: string
-  authors: string[]
-  citationCount: number
+  title: string;
+  description: string;
+  category: string;
+  authors: string[];
+  citationCount: number;
 }
 
 export default function ResearchCard({
@@ -14,7 +14,7 @@ export default function ResearchCard({
   citationCount,
 }: ResearchCardProps) {
   return (
-    <div className="p-6 bg-white border border-border rounded-lg hover:shadow-md hover:border-primary/30 transition-all cursor-pointer group">
+    <div className="p-6 bg-card border border-border rounded-lg hover:shadow-md hover:border-primary/30 transition-all cursor-pointer group">
       {/* Category Badge */}
       <div className="flex items-start justify-between mb-3">
         <span className="text-xs font-semibold text-primary bg-primary/10 px-3 py-1 rounded-full">
@@ -69,5 +69,5 @@ export default function ResearchCard({
         </div>
       </div>
     </div>
-  )
+  );
 }

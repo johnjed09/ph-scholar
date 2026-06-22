@@ -1,11 +1,11 @@
 interface PaperResultCardProps {
-  title: string
-  authors: string[]
-  abstract: string
-  year: number
-  citations: number
-  hIndex: number
-  institution: string
+  title: string;
+  authors: string[];
+  abstract: string;
+  year: number;
+  citations: number;
+  hIndex: number;
+  institution: string;
 }
 
 export default function PaperResultCard({
@@ -18,7 +18,7 @@ export default function PaperResultCard({
   institution,
 }: PaperResultCardProps) {
   return (
-    <div className="p-6 bg-white border border-border rounded-lg hover:shadow-md hover:border-primary/30 transition-all group">
+    <div className="p-6 bg-card border border-border rounded-lg hover:shadow-md hover:border-primary/30 transition-all group">
       <div className="flex items-start justify-between gap-4">
         {/* Main Content */}
         <div className="flex-1 min-w-0">
@@ -30,7 +30,7 @@ export default function PaperResultCard({
           {/* Authors */}
           <div className="mb-3">
             <p className="text-sm text-foreground/70 line-clamp-1">
-              {authors.join(', ')}
+              {authors.join(", ")}
             </p>
           </div>
 
@@ -100,11 +100,11 @@ export default function PaperResultCard({
           {/* Impact Badge */}
           <div className="text-center">
             <div className="inline-block px-2 py-1 bg-primary/10 text-primary text-xs font-semibold rounded">
-              {citations > 50 ? 'High' : citations > 20 ? 'Med' : 'Low'} Impact
+              {citations > 50 ? "High" : citations > 20 ? "Med" : "Low"} Impact
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
