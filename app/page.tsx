@@ -3,6 +3,7 @@
 import SearchBar from "@/components/search-bar";
 import ResearchCard from "@/components/research-card";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const featuredResearch = [
   {
@@ -33,9 +34,12 @@ const featuredResearch = [
 ];
 
 export default function Home() {
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const handleSearch = (query: string) => {
+    setIsLoading(true);
+
     router.push(`/search?q=${encodeURIComponent(query)}`);
   };
 
@@ -57,7 +61,11 @@ export default function Home() {
 
           {/* Search Bar */}
           <div className="max-w-3xl mx-auto">
-            <SearchBar variant="hero" onSearch={handleSearch} />
+            <SearchBar
+              variant="hero"
+              onSearch={handleSearch}
+              isLoading={isLoading}
+            />
           </div>
         </div>
       </section>

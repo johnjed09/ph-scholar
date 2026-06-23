@@ -3,7 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import SearchBar from "@/components/search-bar";
 import PaperResultCard from "@/components/paper-result-card";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Mock search results data
 const mockResults = [
@@ -74,6 +74,7 @@ const mockResults = [
 ];
 
 export default function SearchPage() {
+  const [searchResults, setSearchResults] = useState([]);
   const searchParams = useSearchParams();
   const query = searchParams.get("q") || "";
   const [sortBy, setSortBy] = useState<"relevance" | "citations" | "recent">(
@@ -88,6 +89,27 @@ export default function SearchPage() {
     params.set("q", newQuery);
     window.history.pushState(null, "", `?${params.toString()}`);
   };
+
+  useEffect(() => {
+    if (!query) return;
+
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `/api/search?query=${encodeURIComponent(query)}`,
+        );
+        const data = await response.json();
+
+        setSearchResults(data.results || []);
+      } catch (error) {
+        console.error("Error fetching search results:", error);
+      }
+    };
+
+    fetchData();
+  }, [query]);
+
+  console.log("Search Results:", searchResults);
 
   return (
     <main className="min-h-screen bg-background">

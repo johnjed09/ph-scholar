@@ -1,30 +1,35 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
+import { useState } from "react";
 
 interface SearchBarProps {
-  variant?: 'hero' | 'compact'
-  onSearch?: (query: string) => void
+  variant?: "hero" | "compact";
+  onSearch: (searchQuery: string) => void;
+  isLoading?: boolean;
 }
 
-export default function SearchBar({ variant = 'hero', onSearch }: SearchBarProps) {
-  const [query, setQuery] = useState('')
+export default function SearchBar({
+  variant = "hero",
+  onSearch,
+  isLoading,
+}: SearchBarProps) {
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (onSearch && query.trim()) {
-      onSearch(query)
-    }
-  }
+    e.preventDefault();
 
-  if (variant === 'compact') {
+    if (searchQuery.trim() === "") return;
+    onSearch(searchQuery);
+  };
+
+  if (variant === "compact") {
     return (
       <form onSubmit={handleSubmit} className="w-full max-w-md">
         <div className="relative">
           <input
             type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search academic papers..."
             className="w-full px-4 py-2 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
           />
@@ -48,7 +53,7 @@ export default function SearchBar({ variant = 'hero', onSearch }: SearchBarProps
           </button>
         </div>
       </form>
-    )
+    );
   }
 
   return (
@@ -56,20 +61,19 @@ export default function SearchBar({ variant = 'hero', onSearch }: SearchBarProps
       <div className="relative">
         <input
           type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search academic papers, research, and authors..."
           className="w-full px-6 py-4 border border-border rounded-full text-base focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary shadow-sm transition-all"
         />
         <button
           type="submit"
+          disabled={isLoading}
           className="absolute right-2 top-1/2 -translate-y-1/2 bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-full text-sm font-medium transition-colors"
         >
-          Search
+          {isLoading ? "Searching..." : "Search"}
         </button>
       </div>
-
-
     </form>
-  )
+  );
 }
