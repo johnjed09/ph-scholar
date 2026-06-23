@@ -3,7 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import SearchBar from "@/components/search-bar";
 import PaperResultCard from "@/components/paper-result-card";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 // Mock search results data
 const mockResults = [
@@ -73,7 +73,7 @@ const mockResults = [
   },
 ];
 
-export default function SearchPage() {
+function SearchContent() {
   const [searchResults, setSearchResults] = useState([]);
   const searchParams = useSearchParams();
   const query = searchParams.get("q") || "";
@@ -259,5 +259,17 @@ export default function SearchPage() {
         </div>
       </div>
     </main>
+  );
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense
+      fallback={
+        <p className="text-muted-foreground">Loading search system...</p>
+      }
+    >
+      <SearchContent />
+    </Suspense>
   );
 }
