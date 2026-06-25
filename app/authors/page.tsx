@@ -1,5 +1,10 @@
+'use client';
+
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+
 export default function AuthorsPage() {
-  const authors = [
+  const allAuthors = [
     {
       name: "Dr. Maria Santos",
       field: "Computer Science",
@@ -48,7 +53,65 @@ export default function AuthorsPage() {
       hIndex: 28,
       citations: 980,
     },
+    {
+      name: "Dr. Isabelle Fernandez",
+      field: "Psychology",
+      institution: "University of Santo Tomas",
+      papers: 112,
+      hIndex: 36,
+      citations: 1750,
+    },
+    {
+      name: "Prof. Miguel Santos",
+      field: "Literature",
+      institution: "Polytechnic University of the Philippines",
+      papers: 68,
+      hIndex: 25,
+      citations: 820,
+    },
+    {
+      name: "Dr. Sofia Reyes",
+      field: "Chemistry",
+      institution: "Ateneo de Manila University",
+      papers: 145,
+      hIndex: 40,
+      citations: 2100,
+    },
+    {
+      name: "Prof. David Torres",
+      field: "Biological Sciences",
+      institution: "De La Salle University",
+      papers: 103,
+      hIndex: 33,
+      citations: 1520,
+    },
+    {
+      name: "Dr. Elena Gonzales",
+      field: "Medicine",
+      institution: "University of the Philippines",
+      papers: 178,
+      hIndex: 48,
+      citations: 2650,
+    },
+    {
+      name: "Prof. Adrian Mercado",
+      field: "Law",
+      institution: "University of Santo Tomas",
+      papers: 54,
+      hIndex: 22,
+      citations: 680,
+    },
   ];
+
+  const ITEMS_PER_PAGE = 6;
+  const [displayedCount, setDisplayedCount] = useState(ITEMS_PER_PAGE);
+
+  const displayedAuthors = allAuthors.slice(0, displayedCount);
+  const hasMore = displayedCount < allAuthors.length;
+
+  const handleLoadMore = () => {
+    setDisplayedCount((prev) => Math.min(prev + ITEMS_PER_PAGE, allAuthors.length));
+  };
 
   return (
     <main className="min-h-screen bg-background">
@@ -90,7 +153,7 @@ export default function AuthorsPage() {
                 </tr>
               </thead>
               <tbody>
-                {authors.map((author, idx) => (
+                {displayedAuthors.map((author, idx) => (
                   <tr
                     key={idx}
                     className="border-b border-border hover:bg-muted/50 transition-colors cursor-pointer"
@@ -125,6 +188,24 @@ export default function AuthorsPage() {
                 ))}
               </tbody>
             </table>
+          </div>
+
+          {/* Load More Button */}
+          {hasMore && (
+            <div className="flex justify-center mt-8">
+              <Button
+                onClick={handleLoadMore}
+                variant="outline"
+                className="px-6 py-2"
+              >
+                Load More Authors
+              </Button>
+            </div>
+          )}
+
+          {/* Results Summary */}
+          <div className="mt-6 text-center text-sm text-foreground/70">
+            Showing {displayedCount} of {allAuthors.length} authors
           </div>
         </div>
       </div>
