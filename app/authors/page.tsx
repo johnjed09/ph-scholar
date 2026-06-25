@@ -1,54 +1,107 @@
+"use client";
+
+import { useState } from "react";
+import { Author } from "../types/authors";
+import { Button } from "@/components/ui/button";
+
+// TODO: For deletion when using actual data.
+const allAuthors = [
+  {
+    name: "Dr. Maria Santos",
+    field: "Computer Science",
+    institution: "University of the Philippines",
+    papers: 124,
+    hIndex: 38,
+    citations: 1840,
+  },
+  {
+    name: "Prof. Juan Cruz",
+    field: "Environmental Science",
+    institution: "De La Salle University",
+    papers: 98,
+    hIndex: 35,
+    citations: 1620,
+  },
+  {
+    name: "Dr. Ana Reyes",
+    field: "Marine Biology",
+    institution: "Ateneo de Manila University",
+    papers: 87,
+    hIndex: 32,
+    citations: 1420,
+  },
+  {
+    name: "Prof. Carlos Mendoza",
+    field: "Physics",
+    institution: "University of the Philippines",
+    papers: 156,
+    hIndex: 44,
+    citations: 2340,
+  },
+  {
+    name: "Dr. Patricia Gonzales",
+    field: "Engineering",
+    institution: "De La Salle University",
+    papers: 92,
+    hIndex: 31,
+    citations: 1250,
+  },
+  {
+    name: "Dr. Roberto Acosta",
+    field: "Economics",
+    institution: "Polytechnic University of the Philippines",
+    papers: 76,
+    hIndex: 28,
+    citations: 980,
+  },
+  {
+    name: "Dr. Roberto Acosta",
+    field: "Economics",
+    institution: "Polytechnic University of the Philippines",
+    papers: 76,
+    hIndex: 28,
+    citations: 980,
+  },
+  {
+    name: "Dr. Roberto Acosta",
+    field: "Economics",
+    institution: "Polytechnic University of the Philippines",
+    papers: 76,
+    hIndex: 28,
+    citations: 980,
+  },
+  {
+    name: "Dr. Roberto Acosta",
+    field: "Economics",
+    institution: "Polytechnic University of the Philippines",
+    papers: 76,
+    hIndex: 28,
+    citations: 980,
+  },
+  {
+    name: "Dr. Roberto Acosta",
+    field: "Economics",
+    institution: "Polytechnic University of the Philippines",
+    papers: 76,
+    hIndex: 28,
+    citations: 980,
+  },
+  ,
+];
+
 export default function AuthorsPage() {
-  const authors = [
-    {
-      name: "Dr. Maria Santos",
-      field: "Computer Science",
-      institution: "University of the Philippines",
-      papers: 124,
-      hIndex: 38,
-      citations: 1840,
-    },
-    {
-      name: "Prof. Juan Cruz",
-      field: "Environmental Science",
-      institution: "De La Salle University",
-      papers: 98,
-      hIndex: 35,
-      citations: 1620,
-    },
-    {
-      name: "Dr. Ana Reyes",
-      field: "Marine Biology",
-      institution: "Ateneo de Manila University",
-      papers: 87,
-      hIndex: 32,
-      citations: 1420,
-    },
-    {
-      name: "Prof. Carlos Mendoza",
-      field: "Physics",
-      institution: "University of the Philippines",
-      papers: 156,
-      hIndex: 44,
-      citations: 2340,
-    },
-    {
-      name: "Dr. Patricia Gonzales",
-      field: "Engineering",
-      institution: "De La Salle University",
-      papers: 92,
-      hIndex: 31,
-      citations: 1250,
-    },
-    {
-      name: "Dr. Roberto Acosta",
-      field: "Economics",
-      institution: "Polytechnic University of the Philippines",
-      papers: 76,
-      hIndex: 28,
-      citations: 980,
-    },
-  ];
+  // TODO: Use actual data
+  const ITEMS_PER_PAGE = 6;
+  const [displayedCount, setDisplayedCount] = useState(ITEMS_PER_PAGE);
+
+  const displayedAuthors = allAuthors.slice(0, displayedCount) as Author[];
+  const hasMore = displayedCount < allAuthors.length;
+
+  const handleLoadMore = () => {
+    setDisplayedCount((prev) =>
+      Math.min(prev + ITEMS_PER_PAGE, allAuthors.length),
+    );
+  };
 
   return (
     <main className="min-h-screen bg-background">
@@ -79,7 +132,7 @@ export default function AuthorsPage() {
                     Institution
                   </th>
                   <th className="px-6 py-4 text-center font-semibold text-foreground">
-                    Papers
+                    Works
                   </th>
                   <th className="px-6 py-4 text-center font-semibold text-foreground">
                     H-Index
@@ -90,7 +143,7 @@ export default function AuthorsPage() {
                 </tr>
               </thead>
               <tbody>
-                {authors.map((author, idx) => (
+                {displayedAuthors.map((author, idx) => (
                   <tr
                     key={idx}
                     className="border-b border-border hover:bg-muted/50 transition-colors cursor-pointer"
@@ -125,6 +178,24 @@ export default function AuthorsPage() {
                 ))}
               </tbody>
             </table>
+          </div>
+
+          {/* Load More Button */}
+          {hasMore && (
+            <div className="flex justify-center mt-8">
+              <Button
+                onClick={handleLoadMore}
+                variant="outline"
+                className="px-6 py-2"
+              >
+                Load More Authors
+              </Button>
+            </div>
+          )}
+
+          {/* Results Summary */}
+          <div className="mt-6 text-center text-sm text-foreground/70">
+            Showing {displayedCount} of {allAuthors.length} authors
           </div>
         </div>
       </div>
