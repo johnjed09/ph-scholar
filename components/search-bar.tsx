@@ -6,14 +6,16 @@ interface SearchBarProps {
   variant?: "hero" | "compact";
   onSearch: (searchQuery: string) => void;
   isLoading?: boolean;
+  queryValue?: string;
 }
 
 export default function SearchBar({
   variant = "hero",
   onSearch,
   isLoading,
+  queryValue = "",
 }: SearchBarProps) {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(queryValue);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
