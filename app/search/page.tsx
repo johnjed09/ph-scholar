@@ -116,7 +116,11 @@ function SearchContent() {
       {/* Search Bar Section */}
       <section className="sticky top-16 z-40 bg-card border-b border-border py-4 px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-4xl">
-          <SearchBar variant="compact" onSearch={handleSearch} />
+          <SearchBar
+            variant="compact"
+            onSearch={handleSearch}
+            queryValue={query}
+          />
         </div>
       </section>
 
