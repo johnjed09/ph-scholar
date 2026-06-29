@@ -1,42 +1,95 @@
+"use client";
+
+import { useState } from "react";
+import { University } from "../types/university";
+import { Button } from "@/components/ui/button";
+
+// TODO: For deletion when using actual data.
+const allUniversities = [
+  {
+    name: "University of the Philippines",
+    location: "Diliman, Quezon City",
+    papers: 1284,
+    hIndex: 89,
+  },
+  {
+    name: "De La Salle University",
+    location: "Taft Avenue, Manila",
+    papers: 856,
+    hIndex: 72,
+  },
+  {
+    name: "Ateneo de Manila University",
+    location: "Loyola Heights, Quezon City",
+    papers: 743,
+    hIndex: 68,
+  },
+  {
+    name: "Polytechnic University of the Philippines",
+    location: "Sta. Mesa, Manila",
+    papers: 621,
+    hIndex: 54,
+  },
+  {
+    name: "Mindanao State University",
+    location: "Iligan City, Lanao del Norte",
+    papers: 487,
+    hIndex: 45,
+  },
+  {
+    name: "University of Santo Tomas",
+    location: "Sampaloc, Manila",
+    papers: 598,
+    hIndex: 52,
+  },
+  {
+    name: "University of Santo Tomas",
+    location: "Sampaloc, Manila",
+    papers: 598,
+    hIndex: 52,
+  },
+  {
+    name: "University of Santo Tomas",
+    location: "Sampaloc, Manila",
+    papers: 598,
+    hIndex: 52,
+  },
+  {
+    name: "University of Santo Tomas",
+    location: "Sampaloc, Manila",
+    papers: 598,
+    hIndex: 52,
+  },
+  {
+    name: "University of Santo Tomas",
+    location: "Sampaloc, Manila",
+    papers: 598,
+    hIndex: 52,
+  },
+  {
+    name: "University of Santo Tomas",
+    location: "Sampaloc, Manila",
+    papers: 598,
+    hIndex: 52,
+  },
+];
+
 export default function UniversitiesPage() {
-  const universities = [
-    {
-      name: "University of the Philippines",
-      location: "Diliman, Quezon City",
-      papers: 1284,
-      hIndex: 89,
-    },
-    {
-      name: "De La Salle University",
-      location: "Taft Avenue, Manila",
-      papers: 856,
-      hIndex: 72,
-    },
-    {
-      name: "Ateneo de Manila University",
-      location: "Loyola Heights, Quezon City",
-      papers: 743,
-      hIndex: 68,
-    },
-    {
-      name: "Polytechnic University of the Philippines",
-      location: "Sta. Mesa, Manila",
-      papers: 621,
-      hIndex: 54,
-    },
-    {
-      name: "Mindanao State University",
-      location: "Iligan City, Lanao del Norte",
-      papers: 487,
-      hIndex: 45,
-    },
-    {
-      name: "University of Santo Tomas",
-      location: "Sampaloc, Manila",
-      papers: 598,
-      hIndex: 52,
-    },
-  ];
+  // TODO: Use actual data
+  const ITEMS_PER_PAGE = 6;
+  const [displayedCount, setDisplayedCount] = useState(ITEMS_PER_PAGE);
+
+  const displayedUniversities = allUniversities.slice(
+    0,
+    displayedCount,
+  ) as University[];
+  const hasMore = displayedCount < allUniversities.length;
+
+  const handleLoadMore = () => {
+    setDisplayedCount((prev) =>
+      Math.min(prev + ITEMS_PER_PAGE, allUniversities.length),
+    );
+  };
 
   return (
     <main className="min-h-screen bg-background">
@@ -55,7 +108,7 @@ export default function UniversitiesPage() {
 
           {/* Universities Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {universities.map((uni, idx) => (
+            {displayedUniversities.map((uni, idx) => (
               <div
                 key={idx}
                 className="p-6 border border-border rounded-lg hover:shadow-md hover:border-primary/30 transition-all group cursor-pointer"
@@ -91,6 +144,24 @@ export default function UniversitiesPage() {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Load More Button */}
+          {hasMore && (
+            <div className="flex justify-center mt-8">
+              <Button
+                onClick={handleLoadMore}
+                variant="outline"
+                className="px-6 py-2"
+              >
+                Load More Universities
+              </Button>
+            </div>
+          )}
+
+          {/* Results Summary */}
+          <div className="mt-6 text-center text-sm text-foreground/70">
+            Showing {displayedCount} of {allUniversities.length} universities
           </div>
         </div>
       </div>
