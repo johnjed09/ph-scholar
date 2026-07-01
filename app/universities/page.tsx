@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { University } from "../types/university";
-import { Button } from "@/components/ui/button";
+import LoadMore from "@/components/loadmore";
 
 // TODO: For deletion when using actual data.
 const allUniversities = [
@@ -83,13 +83,6 @@ export default function UniversitiesPage() {
     0,
     displayedCount,
   ) as University[];
-  const hasMore = displayedCount < allUniversities.length;
-
-  const handleLoadMore = () => {
-    setDisplayedCount((prev) =>
-      Math.min(prev + ITEMS_PER_PAGE, allUniversities.length),
-    );
-  };
 
   return (
     <main className="min-h-screen bg-background">
@@ -146,23 +139,13 @@ export default function UniversitiesPage() {
             ))}
           </div>
 
-          {/* Load More Button */}
-          {hasMore && (
-            <div className="flex justify-center mt-8">
-              <Button
-                onClick={handleLoadMore}
-                variant="outline"
-                className="px-6 py-2"
-              >
-                Load More Universities
-              </Button>
-            </div>
-          )}
-
-          {/* Results Summary */}
-          <div className="mt-6 text-center text-sm text-foreground/70">
-            Showing {displayedCount} of {allUniversities.length} universities
-          </div>
+          <LoadMore
+            showMessage={`Showing ${displayedCount} of ${allUniversities.length} universities`}
+            data={allUniversities}
+            setDisplayedCount={setDisplayedCount}
+            itemsPerPage={ITEMS_PER_PAGE}
+            displayedCount={displayedCount}
+          />
         </div>
       </div>
     </main>
