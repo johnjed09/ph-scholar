@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Author } from "../types/authors";
-import { Button } from "@/components/ui/button";
+import LoadMore from "@/components/loadmore";
 
 // TODO: For deletion when using actual data.
 const allAuthors = [
@@ -86,7 +86,6 @@ const allAuthors = [
     hIndex: 28,
     citations: 980,
   },
-  ,
 ];
 
 export default function AuthorsPage() {
@@ -95,13 +94,6 @@ export default function AuthorsPage() {
   const [displayedCount, setDisplayedCount] = useState(ITEMS_PER_PAGE);
 
   const displayedAuthors = allAuthors.slice(0, displayedCount) as Author[];
-  const hasMore = displayedCount < allAuthors.length;
-
-  const handleLoadMore = () => {
-    setDisplayedCount((prev) =>
-      Math.min(prev + ITEMS_PER_PAGE, allAuthors.length),
-    );
-  };
 
   return (
     <main className="min-h-screen bg-background">
@@ -180,23 +172,13 @@ export default function AuthorsPage() {
             </table>
           </div>
 
-          {/* Load More Button */}
-          {hasMore && (
-            <div className="flex justify-center mt-8">
-              <Button
-                onClick={handleLoadMore}
-                variant="outline"
-                className="px-6 py-2"
-              >
-                Load More Authors
-              </Button>
-            </div>
-          )}
-
-          {/* Results Summary */}
-          <div className="mt-6 text-center text-sm text-foreground/70">
-            Showing {displayedCount} of {allAuthors.length} authors
-          </div>
+          <LoadMore
+            showMessage={`Showing ${displayedCount} of ${allAuthors.length} authors`}
+            data={allAuthors}
+            setDisplayedCount={setDisplayedCount}
+            itemsPerPage={ITEMS_PER_PAGE}
+            displayedCount={displayedCount}
+          />
         </div>
       </div>
     </main>
